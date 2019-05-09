@@ -1,17 +1,24 @@
 <ion-header>
-  <ion-toolbar color=primary>
-    <ion-title> Cadastro de Esportista</ion-title>
+  <ion-toolbar class="ion-text-left">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/initial"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      Cadastro
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-  <ion-content padding class="form-content">
+
+<ion-content padding class="form-content">
 
     <form [formGroup]="validateUser" (ngSubmit)="onSubmit(validateUser.value)">
-      <!---nome-->
+      <!---Nome-->
       <ion-item>
-          <ion-label position="floating" color="primary">Nome: </ion-label>
+          <ion-label position="floating" color="medium">Nome</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
-    <!---nome  validator-->
+      <!---Validação do Nome-->
       <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.name">
             <div class="error-message" *ngIf="validateUser.get('name').hasError(validation.type) && (validateUser.get('name').dirty || validateUser.get('name').touched)">
@@ -19,44 +26,46 @@
             </div>
           </ng-container>
       </div>
-<!---sobrenome-->
+    <!---Sobrenome-->
     <ion-item>
-        <ion-label position="floating" color="primary">Sobrenome</ion-label>
+        <ion-label position="floating" color="medium">Sobrenome</ion-label>
         <ion-input type="text" formControlName="lastname"></ion-input>
-  </ion-item>
+    </ion-item>
 
-  <!--Validação do sobrenome -->
-<div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.lastname">
-      <div class="error-message" *ngIf="validateUser.get('lastname').hasError(validation.type) && (validateUser.get('lastname').dirty || validateUser.get('lastname').touched)">
-        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-      </div>
-    </ng-container>
-</div>
+    <!--Validação do Sobrenome -->
+    <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.lastname">
+          <div class="error-message" *ngIf="validateUser.get('lastname').hasError(validation.type) && (validateUser.get('lastname').dirty || validateUser.get('lastname').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
 
-<!-- Email type input -->
-<ion-item>
-    <ion-label position="floating" color="primary">Email</ion-label>
-    <ion-input type="text" formControlName="email"></ion-input>
-</ion-item>
+    <!-- Email -->
+    <ion-item>
+        <ion-label position="floating" color="medium">Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
 
-<!--validação email-->
+    <!--Validação de e-mail-->
+    <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="error-message" *ngIf="validateUser.get('email').hasError(validation.type) && (validateUser.get('email').dirty || validateUser.get('email').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
 
-<div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.email">
-      <div class="error-message" *ngIf="validateUser.get('email').hasError(validation.type) && (validateUser.get('email').dirty || validateUser.get('email').touched)">
-        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-      </div>
-    </ng-container>
-</div>
-
-<ion-item>
-    <label>CPF<ion-input type="text" value="" placeholder="Digite seu CPF"></ion-input></label><br>
+    <!-- CPF -->
+    <!-- Verificar para o input: formControlName="CPF" -->
+    <ion-item>
+        <ion-label position="floating" color="medium">CPF</ion-label>
+        <ion-input type="text" name="CPF"></ion-input>
     </ion-item>
 
     <div formGroupName="matching_passwords">
         <ion-item>
-          <ion-label position="floating" color="primary">Senha:</ion-label>
+          <ion-label position="floating" color="medium">Senha</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -68,7 +77,7 @@
         </div>
 
         <ion-item>
-          <ion-label position="floating" color="primary">Confirmar Senha</ion-label>
+          <ion-label position="floating" color="medium">Confirmar Senha</ion-label>
           <ion-input type="password" formControlName="confirm_password"></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -97,7 +106,7 @@
       </ng-container>
     </div>
 
-<ion-button color="primary" class="submit-btn" expand="full" type="submit" [disabled]="!validateUser.valid">Submit data</ion-button>
+<ion-button color="warning" class="submit-btn" expand="full" type="submit" [disabled]="!validateUser.valid">Concluir</ion-button>
 
 
 </form>

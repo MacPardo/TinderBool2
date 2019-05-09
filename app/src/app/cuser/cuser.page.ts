@@ -50,25 +50,25 @@ export class CuserPage implements OnInit {
 
   validation_messages = {
 		'name': [
-      { type: 'required', message: 'Por favor coloque seu nome.' }
+      { type: 'required', message: 'Por favor, coloque seu nome.' }
     ],
     'lastname': [
-      { type: 'required', message: 'Por favor coloque seu sobrenome.' }
+      { type: 'required', message: 'Por favor, coloque seu sobrenome.' }
     ],
     'email': [
-      { type: 'required', message: 'Por favor coloque seu email.' },
-      { type: 'pattern', message: 'Um válido de preferencia.' }
+      { type: 'required', message: 'Por favor, coloque seu email.' },
+      { type: 'pattern', message: 'Deve ser um e-mail válido.' }
     ],
     'password': [
-    	{ type: 'required', message: 'Password is required.' },
-    	{ type: 'minlength', message: 'Password must be at least 5 characters long.' },
-    	{ type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.' }
+    	{ type: 'required', message: 'A senha é necessária.' },
+    	{ type: 'minlength', message: 'Senha deve ter no mínimo 5 caracteres.' },
+    	{ type: 'pattern', message: 'Sua senha deve ter ao menos um caractere maiúsculo, um minúculo e um número.' }
     ],
     'confirm_password': [
-    	{ type: 'required', message: 'Confirm password is required.' }
+    	{ type: 'required', message: 'Por favor, confirme sua senha.' }
     ],
     'matching_passwords': [
-    	{ type: 'areEqual', message: 'Password mismatch.' }
+    	{ type: 'areEqual', message: 'Senhas distintas' }
   ]};
 
   onSubmit(values){
