@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-title>Equipes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!--
+    <ion-searchbar animated placeholder="Buscar equipes ou membros..."></ion-searchbar>
+    -->
+
+    <ion-card>
+        <ion-card-header>
+            <!-- NOME DA EQUIPE -->
+            <ion-card-title>Equipe 1</ion-card-title>
+            <!-- ESPORTE -->
+            <ion-card-subtitle>Vôlei</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            Keep close to Nature's heart... and break clear away, once in awhile,
+            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+
+        <!--CRIADOR DA EQUIPE-->
+        <ion-chip>
+          <ion-avatar>
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+          <ion-label>Fulano de Tal</ion-label>
+        </ion-chip>
+    </ion-card>
+
+
+    <!-- BOTÃO FLUTUANTE -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" padding>
+      <ion-fab-button color="warning" href="../cad-equipe" routerDirection="forward" >
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+</ion-content>
