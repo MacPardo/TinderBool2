@@ -37,12 +37,7 @@ export class CuserPage implements OnInit {
       }
     );
     this.validateUser = this.formBuilder.group({
-      name: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.minLength(3),
-        Validators.pattern('[a-zA-Z]+$')
-      ])),
-      lastname: new FormControl('', Validators.compose([
+      userName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(3),
         Validators.pattern('[a-zA-Z]+$')
@@ -63,11 +58,8 @@ export class CuserPage implements OnInit {
   }
 
   validation_messages = {
-		'name': [
+		'userName': [
       { type: 'required', message: 'Por favor, coloque seu nome.' }
-    ],
-    'lastname': [
-      { type: 'required', message: 'Por favor, coloque seu sobrenome.' }
     ],
     'email': [
       { type: 'required', message: 'Por favor, coloque seu email.' },

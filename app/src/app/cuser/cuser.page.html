@@ -15,31 +15,34 @@
     <form [formGroup]="validateUser" (ngSubmit)="onSubmit(validateUser.value)">
       <!---Nome-->
       <ion-item>
-          <ion-label position="floating" color="medium">Nome</ion-label>
-        <ion-input type="text" formControlName="name"></ion-input>
+          <ion-label position="floating" color="medium">Nome Completo</ion-label>
+        <ion-input type="text" formControlName="userName"></ion-input>
       </ion-item>
       <!---Validação do Nome-->
       <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.name">
-            <div class="error-message" *ngIf="validateUser.get('name').hasError(validation.type) && (validateUser.get('name').dirty || validateUser.get('name').touched)">
+            <div class="error-message" *ngIf="validateUser.get('userName').hasError(validation.type) && (validateUser.get('userName').dirty || validateUser.get('userName').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
       </div>
-    <!---Sobrenome-->
+
+    <!--Sexo-->
     <ion-item>
-        <ion-label position="floating" color="medium">Sobrenome</ion-label>
-        <ion-input type="text" formControlName="lastname"></ion-input>
+      <ion-label color="medium">Sexo</ion-label> <ion-select placeholder="Selecione">
+      <ion-select-option value="f">Feminino</ion-select-option> <ion-select-option value="m">Masculino</ion-select-option>
+      </ion-select>
     </ion-item>
 
-    <!--Validação do Sobrenome -->
-    <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.lastname">
-          <div class="error-message" *ngIf="validateUser.get('lastname').hasError(validation.type) && (validateUser.get('lastname').dirty || validateUser.get('lastname').touched)">
-            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-          </div>
-        </ng-container>
-    </div>
+    <!-- Data de nascimento -->
+    <ion-item>
+      <ion-label color="medium">Data de nascimento</ion-label>
+      <ion-datetime  min="1950-02" max="2019"
+        [dayShortNames]="customDayShortNames"
+        displayFormat="DD MMM YYYY"
+        monthShortNames="jan, fev, mar, abr, mai, jun, jul, aug, set, out, nov, dez"></ion-datetime>
+    </ion-item>
+
 
     <!-- Email -->
     <ion-item>
@@ -70,6 +73,17 @@
           </div>
         </ng-container>
     </div>
+
+    <!--Esportes-->
+    <ion-item>
+      <ion-label color="medium">Esportes de interesse</ion-label>
+      <ion-select multiple="true" placeholder="Selecione">
+          <ion-select-option value="futebol">Futebol</ion-select-option>
+          <ion-select-option value="volei">Vôlei</ion-select-option>
+          <ion-select-option value="basquete">Basquete</ion-select-option>
+      </ion-select>
+    </ion-item>
+
 
     <div formGroupName="matching_passwords">
         <ion-item>
