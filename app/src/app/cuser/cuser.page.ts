@@ -39,9 +39,14 @@ export class CuserPage implements OnInit {
     this.validateUser = this.formBuilder.group({
       name: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern('[a-zA-Z]+$')
       ])),
-      lastname: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('[a-zA-Z]+$')
+      ])),
       cpf: new FormControl('',Validators.compose([
         Validators.required,
         Validators.minLength(11),
