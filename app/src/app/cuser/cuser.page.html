@@ -47,7 +47,7 @@
         <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
 
-    <!--Validação de e-mail-->
+    <!--Validação de e-mail ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9]+?.[a-zA-Z0-9]+$-->
     <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.email">
           <div class="error-message" *ngIf="validateUser.get('email').hasError(validation.type) && (validateUser.get('email').dirty || validateUser.get('email').touched)">
@@ -57,11 +57,19 @@
     </div>
 
     <!-- CPF -->
-    <!-- Verificar para o input: formControlName="CPF" -->
     <ion-item>
         <ion-label position="floating" color="medium">CPF</ion-label>
-        <ion-input type="text" name="CPF"></ion-input>
+        <ion-input type="text" formControlName="cpf"></ion-input>
     </ion-item>
+
+    <!--Validação de CPF-->
+    <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.cpf">
+          <div class="error-message" *ngIf="validateUser.get('cpf').hasError(validation.type) && (validateUser.get('cpf').dirty || validateUser.get('cpf').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
 
     <div formGroupName="matching_passwords">
         <ion-item>
