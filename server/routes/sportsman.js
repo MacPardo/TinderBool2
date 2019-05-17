@@ -19,7 +19,7 @@ const sportsmanReqPrepare = sportsman => ({
     cpf: sportsman.cpf,
     sportsInterest: sportsman.sports,
     gender: sportsman.gender,
-    birhtDate: sportsman.birhtDate,
+    birthDate: sportsman.birthDate,
     picture: ''
 });
 
@@ -30,7 +30,7 @@ const sportsmanDbPrepare = sportsman => ({
     cpf: sportsman.cpf,
     sportsInterest: sportsman.sports,
     gender: sportsman.gender,
-    birhtDate: sportsman.birhtDate,
+    birthDate: sportsman.birthDate,
     picture: ''
 });
 
@@ -87,11 +87,22 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    SportsmanModel.findOne({ userName: req.body.userName }, async (err, sportsman) => {
+    SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
+        
+        if (!sportsman) {
+            res.status(404).send();
+            return;
+        }
+
         if (err) {
             res.status(500).send();
         } else {
-            const authenticated = await bcrypt.compare(req.body.password, sportsman.password);
+            let authenticated = false;
+            try {
+                authenticated = await bcrypt.compare(req.body.password, sportsman.password);
+            } catch (e) {
+                res.send(400);
+            }
 
             if (authenticated) { // password ok
                 // TODO: inicializar session aqui
