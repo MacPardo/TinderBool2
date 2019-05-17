@@ -37,11 +37,25 @@ export class CuserPage implements OnInit {
       }
     );
     this.validateUser = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('[a-zA-Z]+$')
+      ])),
+      lastname: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('[a-zA-Z]+$')
+      ])),
+      cpf: new FormControl('',Validators.compose([
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(14),
+        Validators.pattern('^([0-9]{3})+.([0-9]{3})+.([0-9]{3})+-([0-9]{2})+$')
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})')
       ])),
       matching_passwords: this.matching_passwords_group,
       terms: new FormControl(true, Validators.pattern('true'))
@@ -50,25 +64,29 @@ export class CuserPage implements OnInit {
 
   validation_messages = {
 		'name': [
-      { type: 'required', message: 'Por favor coloque seu nome.' }
+      { type: 'required', message: 'Por favor, coloque seu nome.' }
     ],
     'lastname': [
-      { type: 'required', message: 'Por favor coloque seu sobrenome.' }
+      { type: 'required', message: 'Por favor, coloque seu sobrenome.' }
     ],
     'email': [
-      { type: 'required', message: 'Por favor coloque seu email.' },
-      { type: 'pattern', message: 'Um válido de preferencia.' }
+      { type: 'required', message: 'Por favor, coloque seu email.' },
+      { type: 'pattern', message: 'Deve ser um e-mail válido.' }
+    ],
+    'cpf': [
+      { type: 'required', message: 'Por favor, coloque seu CPF.' },
+      { type: 'pattern', message: 'Deve ser 123.456.789-10' }
     ],
     'password': [
-    	{ type: 'required', message: 'Password is required.' },
-    	{ type: 'minlength', message: 'Password must be at least 5 characters long.' },
-    	{ type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.' }
+    	{ type: 'required', message: 'A senha é necessária.' },
+    	{ type: 'minlength', message: 'Senha deve ter no mínimo 5 caracteres.' },
+    	{ type: 'pattern', message: 'Sua senha deve ter ao menos um caractere maiúsculo, um minúculo e um número.' }
     ],
     'confirm_password': [
-    	{ type: 'required', message: 'Confirm password is required.' }
+    	{ type: 'required', message: 'Por favor, confirme sua senha.' }
     ],
     'matching_passwords': [
-    	{ type: 'areEqual', message: 'Password mismatch.' }
+    	{ type: 'areEqual', message: 'Senhas distintas' }
   ]};
 
   onSubmit(values){
