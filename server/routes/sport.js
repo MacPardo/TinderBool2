@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     SportModel.find({sportName: new RegExp(sportName, "i")}, (err, modelRes) => {
         if (err) {
             console.log('could not find sport');
-            res.status(400).send();
+            res.status(404).send();
         } else {
             console.log('found sport', modelRes);
             res.send(modelRes);

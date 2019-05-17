@@ -6,6 +6,34 @@ const config = require('../config');
 
 const SportsmanModel = require('../models/SportsmanModel');
 
+/**
+ * Prepara a informação de um sportsman
+ * vinda direto do banco para ser enviada
+ * em uma requisição.
+ * @param {Object} sportsman Enviado pelo SportsmanModel
+ * @returns {Object} Pronto para ser enviado pela API
+ */
+const sportsmanReqPrepare = sportsman => ({
+    userName: sportsman.userName,
+    email: sportsman.email,
+    cpf: sportsman.cpf,
+    sportsInterest: sportsman.sports,
+    gender: sportsman.gender,
+    birhtDate: sportsman.birhtDate,
+    picture: ''
+});
+
+const sportsmanDbPrepare = sportsman => ({
+    userName: sportsman.userName,
+    password: sportsman.password,
+    email: sportsman.email,
+    cpf: sportsman.cpf,
+    sportsInterest: sportsman.sports,
+    gender: sportsman.gender,
+    birhtDate: sportsman.birhtDate,
+    picture: ''
+});
+
 router.get('/', (req, res) => {
     SportsmanModel.find({}, (err, sportspeople) => {
         console.log('callback running');
@@ -15,7 +43,9 @@ router.get('/', (req, res) => {
         } else {
             console.log('sportspeople are');
             console.log(sportspeople)
-            res.send(sportspeople);
+
+            const responseArray = sportspeople.map(sportsmanReqPrepare);
+            res.send(responseArray);
         }
     });
 });
@@ -27,6 +57,7 @@ router.get('/:id', (req, res) => {
         if (err) {
             res.status(404).send();
         } else {
+            const response = sportsmanReqPrepare(sportsman);
             res.send(sportsman);
         }
     });
@@ -34,14 +65,14 @@ router.get('/:id', (req, res) => {
 
 router.post('/', async (req, res) => {
 
+    const sportsmanPrep = sportsmanDbPrepare(req.body);
     const hash = await bcrypt.hash(req.body.password, config.BCRYPT_SALT_ROUNDS);
+    sportsmanPrep.password = hash;
 
     console.log(`PASSWORD: ${req.body.password}\tHASH: ${hash}`);
 
-    const sportsman = new SportsmanModel({
-        ...req.body,
-        password: hash
-    });
+    const sportsman = new SportsmanModel(sportsmanPrep);
+    
     console.log(sportsman);
     sportsman.save(err => {
         if (err) {
@@ -56,7 +87,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    SportsmanModel.findOne({userName: req.body.userName}, async (err, sportsman) => {
+    SportsmanModel.findOne({ userName: req.body.userName }, async (err, sportsman) => {
         if (err) {
             res.status(500).send();
         } else {
@@ -76,8 +107,9 @@ router.post('/login', (req, res) => {
 
 router.put('/:id', (req, res) => {
     res.send(`edit sportsman with id = ${req.params.id}`);
+    const sportsman = sportsmanDbPrepare(req.body);
 
-    SportsmanModel.findOneAndUpdate({'_id': req.params.id}, req.body, (err, doc, updateRes) => {
+    SportsmanModel.findOneAndUpdate({ '_id': req.params.id }, sportsman, (err, doc, updateRes) => {
         if (err) {
             console.log('failed to update');
             res.status(400).send();
@@ -94,7 +126,7 @@ router.get('/:id/sports', (req, res) => {
             res.status(404).send();
         } else {
             console.log('found', sportsman)
-            res.send({"sports": sportsman.sports || []});
+            res.send({ "sports": sportsman.sports || [] });
         }
     });
 });
