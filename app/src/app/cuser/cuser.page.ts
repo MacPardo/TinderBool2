@@ -59,12 +59,15 @@ export class CuserPage implements OnInit {
         Validators.minLength(3),
         Validators.pattern('[a-zA-Z]+$')
       ])),
+      gender: new FormControl('', Validators.required),
       cpf: new FormControl('',Validators.compose([
         Validators.required,
         Validators.minLength(11),
         Validators.maxLength(14),
         Validators.pattern('^([0-9]{3})+.([0-9]{3})+.([0-9]{3})+-([0-9]{2})+$')
       ])),
+      sports: new FormControl('', Validators.required),
+      birthDate: new FormControl('', Validators.required),
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})')

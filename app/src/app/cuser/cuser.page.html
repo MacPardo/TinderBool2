@@ -29,8 +29,8 @@
 
     <!--Sexo-->
     <ion-item>
-      <ion-label color="medium">Sexo</ion-label> <ion-select placeholder="Selecione">
-      <ion-select-option value="f">Feminino</ion-select-option> <ion-select-option value="m">Masculino</ion-select-option>
+      <ion-label color="medium">Sexo</ion-label> <ion-select placeholder="Selecione" formControlName="gender">
+      <ion-select-option value="Feminino">Feminino</ion-select-option> <ion-select-option value="Masculino">Masculino</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -38,6 +38,7 @@
     <ion-item>
       <ion-label color="medium">Data de nascimento</ion-label>
       <ion-datetime  min="1950-02" max="2019"
+        formControlName="birthDate"
         [dayShortNames]="customDayShortNames"
         displayFormat="DD/MM/YYYY"
         pickerFormat= "DD MMM YYYY"
@@ -78,10 +79,10 @@
     <!--Esportes-->
     <ion-item>
       <ion-label color="medium">Esportes de interesse</ion-label>
-      <ion-select multiple="true" placeholder="Selecione">
-          <ion-select-option value="futebol">Futebol</ion-select-option>
-          <ion-select-option value="volei">Vôlei</ion-select-option>
-          <ion-select-option value="basquete">Basquete</ion-select-option>
+      <ion-select multiple="true" placeholder="Selecione" formControlName="sports">
+          <ion-select-option value="1">Futebol</ion-select-option>
+          <ion-select-option value="2">Vôlei</ion-select-option>
+          <ion-select-option value="3">Basquete</ion-select-option>
       </ion-select>
     </ion-item>
 

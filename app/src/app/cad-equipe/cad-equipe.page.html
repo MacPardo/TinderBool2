@@ -11,31 +11,43 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding class="form-content">
     <form #form="ngForm" (ngSubmit)="cad-equipe(form)">
-    <!-- ITENS INPUT -->
+
+    <!---Nome-->
     <ion-item>
-      <ion-label position="floating">Nome da Equipe </ion-label>
-      <ion-input name="nomeEquipe" type="text" minlength="2" ngModel required></ion-input>
+        <ion-label position="floating" color="medium">Nome da Equipe</ion-label>
+        <ion-input type="text"></ion-input>
     </ion-item>
 
-    <!--
+    <!--Esporte-->
     <ion-item>
-      <ion-label position="floating">Esporte da Equipe</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-    -->
-
-    <ion-item>
-      <ion-label>Selecione um esporte</ion-label>
-      <ion-select value="futebol" okText="Okay">
-        <ion-select-option value="futebol">Futebol</ion-select-option>
-        <ion-select-option value="volei">Vôlei</ion-select-option>
-        <ion-select-option value="basquete">Basquete</ion-select-option>
+      <ion-label color="medium">Esporte</ion-label> <ion-select placeholder="Selecione">
+      <ion-select-option value="futebol">Futebol</ion-select-option>
+      <ion-select-option value="basquete">Basquete</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <!-- BOTÕES -->
+<!-- Membros
+    <ion-item>
+      <ion-label color="medium">Membros iniciais</ion-label>
+      <ion-select multiple="true" placeholder="Selecione">
+          <ion-select-option value="1">Futebol</ion-select-option>
+          <ion-select-option value="volei">Vôlei</ion-select-option>
+          <ion-select-option value="basquete">Basquete</ion-select-option>
+      </ion-select>
+    </ion-item>
+-->
+    <!--Acesso-->
+    <ion-item>
+      <ion-label color="medium">Acesso</ion-label>
+      <ion-select placeholder="Selecione">
+        <ion-select-option value="pri">Privado</ion-select-option>
+        <ion-select-option value="pub">Público</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- BOTÕES
     <ion-row class="ion-text-center">
         <ion-col align-self-center>
             <ion-button href="../add-members" class="ion-padding" routerDirection="back" color="medium">
@@ -44,7 +56,7 @@
             </ion-button>
         </ion-col>
     </ion-row>
-
+-->
 
     <ion-row class="ion-text-center">
         <ion-col align-self-center>
