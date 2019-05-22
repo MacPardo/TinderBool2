@@ -4,6 +4,23 @@ const router = express.Router();
 
 const SportModel = require('../models/SportModel');
 
+/**
+ * Prepara a informação de um sportsman
+ * vinda direto do banco para ser enviada
+ * em uma requisição.
+ * @param {Object} sport Enviado pelo SportsmanModel
+ * @returns {Object} Pronto para ser enviado pela API
+ */
+const sportReqPrepare = sport => ({
+  sportName: sport.sportName,
+  minPeople: sport.minPeople
+});
+
+const sportDbPrepare = sport => ({
+  sportName: sport.sportName,
+  minPeople: sport.minPeople
+});
+
 router.get('/', (req, res) => {
     // get all sports
     const sportName = req.query.sportName; // filter by name
@@ -30,6 +47,24 @@ router.get('/:id', (req, res) => {
         } else {
             console.log('found ', modelRes);
             res.send(modelRes);
+        }
+    });
+});
+
+router.post('/', async (req, res) => {
+
+    const sportPrep = sportDbPrepare(req.body);
+    const sport = new SportModel(sportPrep);
+
+    console.log(sport);
+    sport.save(err => {
+        if (err) {
+            console.log('could not save');
+            console.log(err);
+            res.status(400).send();
+        } else {
+            console.log('saved successfully');
+            res.status(201).send();
         }
     });
 });
