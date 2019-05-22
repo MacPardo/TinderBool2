@@ -7,6 +7,10 @@ import {PasswordValidator} from 'validators/password.validator';
 import {Router} from 'node_modules/@angular/router';
 import { from } from 'rxjs';
 
+import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
+import { RestApiService } from '../rest-api.service';
+
 @Component({
   selector: 'app-cuser',
   templateUrl: './cuser.page.html',
@@ -18,7 +22,20 @@ export class CuserPage implements OnInit {
   validateUser: FormGroup;
   matching_passwords_group: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private router: Router) { }
+  constructor(public formBuilder: FormBuilder,
+              private router: Router,
+              public api: RestApiService,
+              public loadingCtrl: LoadingController,
+              public alertController : AlertController) { }
+
+  async errorToast(title: string, message: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: ['Continuar']
+    });
+    await alert.present();
+  }
 
   ngOnInit() {
     this.matching_passwords_group = new FormGroup(
@@ -55,6 +72,8 @@ export class CuserPage implements OnInit {
       matching_passwords: this.matching_passwords_group,
       terms: new FormControl(true, Validators.pattern('true'))
 		});
+
+    this.loadSports();
   }
 
   validation_messages = {
@@ -84,6 +103,20 @@ export class CuserPage implements OnInit {
   onSubmit(values){
     console.log(values);
     this.router.navigate(["/user"]);
-    }
+  }
+
+  async loadSports(){
+    await this.api.getSports()
+      .subscribe(res => {
+        if(res == 0)
+          this.errorToast('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
+        else{
+          var sport = res;
+          for(var i in sport){
+            console.log(sport[i])
+          }
+        }
+      });
+  }
 
 }

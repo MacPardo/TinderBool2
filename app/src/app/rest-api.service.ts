@@ -4,11 +4,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  headers: new HttpHeaders({'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Methods': 'POST, GET, PUT',
+                            'Accept': 'application/json'}),
 };
 
 /* Nome qualquer, pois não temos isso ainda :) */
-const apiUrl = "https://api.com";
+const apiUrl = "http://127.0.0.1:3000";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +38,15 @@ export class RestApiService {
   private extractData(res: Response) {
     let body = res;
     return body || { };
+  }
+
+  getSports(): Observable<any> {
+    const url = `${apiUrl}/sport`;
+    let result = this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+    return result
   }
 
   login(email: string, password: string): Observable<any> {
