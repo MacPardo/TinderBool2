@@ -49,9 +49,27 @@ export class RestApiService {
     return result
   }
 
+  getSportById(id: string): Observable<any> {
+    const url = `${apiUrl}/sport/${id}`;
+    let result = this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+    return result
+  }
+
+  postSportsman(sportsman: Object): Observable<any> {
+    const url = `${apiUrl}/sportsman`;
+    let result = this.http.post(url, sportsman, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+    return result
+  }
+
   login(email: string, password: string): Observable<any> {
     const url = `${apiUrl}/sportsman?email=${email}&password=${password}`;
-    let result = this.http.get(url, httpOptions).pipe(
+    let result = this.http.post(url, {email:email, password:password}, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
