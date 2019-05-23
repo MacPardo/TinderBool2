@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
+const aux     = require('./routesAux');
 
 const SportModel = require('../models/SportModel');
 
@@ -20,6 +21,8 @@ const sportDbPrepare = sport => ({
   sportName: sport.sportName,
   minPeople: sport.minPeople
 });
+
+router.use(aux.authMiddleware);
 
 router.get('/', (req, res) => {
     // get all sports

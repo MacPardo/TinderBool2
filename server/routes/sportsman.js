@@ -1,8 +1,9 @@
 'use strict';
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const config = require('../config');
+const router  = express.Router();
+const bcrypt  = require('bcrypt');
+const config  = require('../config');
+const aux     = require('./routesAux');
 
 const SportsmanModel = require('../models/SportsmanModel');
 
@@ -33,6 +34,39 @@ const sportsmanDbPrepare = sportsman => ({
     birthDate: sportsman.birthDate,
     picture: ''
 });
+
+router.post('/login', (req, res) => {
+    SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
+        
+        if (!sportsman) {
+            res.status(404).send();
+            return;
+        }
+
+        if (err) {
+            res.status(500).send();
+        } else {
+            let authenticated = false;
+            try {
+                authenticated = await bcrypt.compare(req.body.password, sportsman.password);
+            } catch (e) {
+                res.send(400);
+            }
+
+            if (authenticated) { // password ok
+                // TODO: inicializar session aqui
+                req.session.user = sportsman;
+                console.log('Login ok');
+                res.status(200).send();
+            } else {
+                console.log('Login fail');
+                res.status(401).send();
+            }
+        }
+    });
+});
+
+router.use(aux.authMiddleware);
 
 router.get('/', (req, res) => {
     SportsmanModel.find({}, (err, sportspeople) => {
@@ -82,36 +116,6 @@ router.post('/', async (req, res) => {
         } else {
             console.log('saved successfully');
             res.status(201).send();
-        }
-    });
-});
-
-router.post('/login', (req, res) => {
-    SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
-        
-        if (!sportsman) {
-            res.status(404).send();
-            return;
-        }
-
-        if (err) {
-            res.status(500).send();
-        } else {
-            let authenticated = false;
-            try {
-                authenticated = await bcrypt.compare(req.body.password, sportsman.password);
-            } catch (e) {
-                res.send(400);
-            }
-
-            if (authenticated) { // password ok
-                // TODO: inicializar session aqui
-                console.log('Login ok');
-                res.status(200).send();
-            } else {
-                console.log('Login fail');
-                res.status(401).send();
-            }
         }
     });
 });
