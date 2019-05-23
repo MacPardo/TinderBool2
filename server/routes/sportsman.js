@@ -66,6 +66,29 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.post('/', async (req, res) => {
+
+    const sportsmanPrep = sportsmanDbPrepare(req.body);
+    const hash = await bcrypt.hash(req.body.password, config.BCRYPT_SALT_ROUNDS);
+    sportsmanPrep.password = hash;
+
+    console.log(`PASSWORD: ${req.body.password}\tHASH: ${hash}`);
+
+    const sportsman = new SportsmanModel(sportsmanPrep);
+    
+    console.log(sportsman);
+    sportsman.save(err => {
+        if (err) {
+            console.log('could not save');
+            console.log(err);
+            res.status(400).send();
+        } else {
+            console.log('saved successfully');
+            res.status(201).send();
+        }
+    });
+});
+
 router.use(aux.authMiddleware);
 
 router.get('/', (req, res) => {
@@ -93,29 +116,6 @@ router.get('/:id', (req, res) => {
         } else {
             const response = sportsmanReqPrepare(sportsman);
             res.send(sportsman);
-        }
-    });
-});
-
-router.post('/', async (req, res) => {
-
-    const sportsmanPrep = sportsmanDbPrepare(req.body);
-    const hash = await bcrypt.hash(req.body.password, config.BCRYPT_SALT_ROUNDS);
-    sportsmanPrep.password = hash;
-
-    console.log(`PASSWORD: ${req.body.password}\tHASH: ${hash}`);
-
-    const sportsman = new SportsmanModel(sportsmanPrep);
-    
-    console.log(sportsman);
-    sportsman.save(err => {
-        if (err) {
-            console.log('could not save');
-            console.log(err);
-            res.status(400).send();
-        } else {
-            console.log('saved successfully');
-            res.status(201).send();
         }
     });
 });

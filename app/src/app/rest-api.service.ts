@@ -58,9 +58,26 @@ export class RestApiService {
     return result
   }
 
-  postSportsman(sportsman: Object): Observable<any> {
+  postSportsman(userName: string,
+                password: string,
+                email: string,
+                cpf: string,
+                sports: Array<string>,
+                birthDate: string,
+                gender: string,
+                picture: string = ""): Observable<any> {
     const url = `${apiUrl}/sportsman`;
-    let result = this.http.post(url, sportsman, httpOptions).pipe(
+    var body = {
+      userName: userName,
+      password: password,
+      email: email,
+      cpf: cpf,
+      sports: userName,
+      birthDate: birthDate,
+      gender: gender,
+      picture: picture
+    };
+    let result = this.http.post(url, body, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
