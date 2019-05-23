@@ -26,7 +26,7 @@ export class CuserPage implements OnInit {
               public api: RestApiService,
               public alertController : AlertController) { }
 
-  async errorToast(title: string, message: string) {
+  async alert(title: string, message: string) {
     const alert = await this.alertController.create({
       header: title,
       message: message,
@@ -110,7 +110,7 @@ export class CuserPage implements OnInit {
     await this.api.getSports()
       .subscribe(res => {
         if(res == 0){
-          this.errorToast('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
+          this.alert('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
           this.router.navigate(["/initial"]);
         }
         else{
