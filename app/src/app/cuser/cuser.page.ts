@@ -8,7 +8,6 @@ import {Router} from 'node_modules/@angular/router';
 import { from } from 'rxjs';
 
 import { AlertController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class CuserPage implements OnInit {
   constructor(public formBuilder: FormBuilder,
               private router: Router,
               public api: RestApiService,
-              public loadingCtrl: LoadingController,
               public alertController : AlertController) { }
 
   async errorToast(title: string, message: string) {
