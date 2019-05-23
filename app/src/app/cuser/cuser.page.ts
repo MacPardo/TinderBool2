@@ -111,8 +111,10 @@ export class CuserPage implements OnInit {
   async loadSports(){
     await this.api.getSports()
       .subscribe(res => {
-        if(res == 0)
+        if(res == 0){
           this.errorToast('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
+          this.router.navigate(["/initial"]);
+        }
         else{
           var sport = res;
           for(var i in sport){
