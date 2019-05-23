@@ -69,7 +69,11 @@ export class RestApiService {
 
   login(email: string, password: string): Observable<any> {
     const url = `${apiUrl}/sportsman?email=${email}&password=${password}`;
-    let result = this.http.post(url, {email:email, password:password}, httpOptions).pipe(
+    var body = {
+      email:email,
+      password:password
+    };
+    let result = this.http.post(url, body, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
