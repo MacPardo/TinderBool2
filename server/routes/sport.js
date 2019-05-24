@@ -22,8 +22,6 @@ const sportDbPrepare = sport => ({
   minPeople: sport.minPeople
 });
 
-router.use(aux.authMiddleware);
-
 router.get('/', (req, res) => {
     // get all sports
     const sportName = req.query.sportName; // filter by name
