@@ -1,8 +1,9 @@
 'use strict';
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const config = require('../config');
+const router  = express.Router();
+const bcrypt  = require('bcrypt');
+const config  = require('../config');
+const aux     = require('./routesAux');
 
 const SportsmanModel = require('../models/SportsmanModel');
 
@@ -34,31 +35,33 @@ const sportsmanDbPrepare = sportsman => ({
     picture: ''
 });
 
-router.get('/', (req, res) => {
-    SportsmanModel.find({}, (err, sportspeople) => {
-        console.log('callback running');
-        if (err) {
-            console.log('there was an error');
+router.post('/login', (req, res) => {
+    SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
+        
+        if (!sportsman) {
             res.status(404).send();
-        } else {
-            console.log('sportspeople are');
-            console.log(sportspeople)
-
-            const responseArray = sportspeople.map(sportsmanReqPrepare);
-            res.send(responseArray);
+            return;
         }
-    });
-});
 
-router.get('/:id', (req, res) => {
-    SportsmanModel.findById(req.params.id, (err, sportsman) => {
-        console.log('sportsman:');
-        console.log(sportsman);
         if (err) {
-            res.status(404).send();
+            res.status(500).send();
         } else {
-            const response = sportsmanReqPrepare(sportsman);
-            res.send(sportsman);
+            let authenticated = false;
+            try {
+                authenticated = await bcrypt.compare(req.body.password, sportsman.password);
+            } catch (e) {
+                res.send(400);
+            }
+
+            if (authenticated) { // password ok
+                // TODO: inicializar session aqui
+                req.session.user = sportsman;
+                console.log('Login ok');
+                res.status(200).send();
+            } else {
+                console.log('Login fail');
+                res.status(401).send();
+            }
         }
     });
 });
@@ -86,32 +89,33 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.post('/login', (req, res) => {
-    SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
-        
-        if (!sportsman) {
-            res.status(404).send();
-            return;
-        }
+router.use(aux.authMiddleware);
 
+router.get('/', (req, res) => {
+    SportsmanModel.find({}, (err, sportspeople) => {
+        console.log('callback running');
         if (err) {
-            res.status(500).send();
+            console.log('there was an error');
+            res.status(404).send();
         } else {
-            let authenticated = false;
-            try {
-                authenticated = await bcrypt.compare(req.body.password, sportsman.password);
-            } catch (e) {
-                res.send(400);
-            }
+            console.log('sportspeople are');
+            console.log(sportspeople)
 
-            if (authenticated) { // password ok
-                // TODO: inicializar session aqui
-                console.log('Login ok');
-                res.status(200).send();
-            } else {
-                console.log('Login fail');
-                res.status(401).send();
-            }
+            const responseArray = sportspeople.map(sportsmanReqPrepare);
+            res.send(responseArray);
+        }
+    });
+});
+
+router.get('/:id', (req, res) => {
+    SportsmanModel.findById(req.params.id, (err, sportsman) => {
+        console.log('sportsman:');
+        console.log(sportsman);
+        if (err) {
+            res.status(404).send();
+        } else {
+            const response = sportsmanReqPrepare(sportsman);
+            res.send(sportsman);
         }
     });
 });

@@ -5,6 +5,7 @@ const app = express();
 const router = require('./routes/routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const dbConnectionString = 'mongodb://127.0.0.1/tinderbool';
 mongoose.connect(dbConnectionString, {useNewUrlParser: true});
@@ -13,6 +14,7 @@ mongoose.connection.on('error', () => {
 });
 
 app.use(bodyParser.json());
+app.use(session({secret: 'TinderBool'}));
 app.use('/', router);
 
 app.get('/', (req, res) => {
