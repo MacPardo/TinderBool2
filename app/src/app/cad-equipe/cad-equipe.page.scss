@@ -4,3 +4,11 @@ ion-content{
 ion-toolbar{
     color: var(--ion-color-warning);
 }
+
+.error-message
+{
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 10px;
+}

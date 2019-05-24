@@ -17,9 +17,9 @@ import { RestApiService } from '../rest-api.service';
 })
 export class CuserPage implements OnInit {
 
-
   validateUser: FormGroup;
   matching_passwords_group: FormGroup;
+  sports: any;
 
   constructor(public formBuilder: FormBuilder,
               private router: Router,
@@ -51,11 +51,12 @@ export class CuserPage implements OnInit {
         return PasswordValidator.areEqual(formGroup);
       }
     );
+    const extraLetters = 'àãâéêíîóõôúûç';
     this.validateUser = this.formBuilder.group({
       userName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(3),
-        Validators.pattern('[a-zA-Z]+$')
+        Validators.pattern(new RegExp(`^([a-z${extraLetters}]+ )+([a-z${extraLetters}]+)$`, 'i'))
       ])),
       gender: new FormControl('', Validators.required),
       cpf: new FormControl('',Validators.compose([
@@ -101,9 +102,24 @@ export class CuserPage implements OnInit {
     	{ type: 'areEqual', message: 'Senhas distintas' }
   ]};
 
-  onSubmit(values){
-    console.log(values);
-    this.router.navigate(["/user"]);
+  async onSubmit(values){
+    await this.api.postSportsman(
+                  values.userName,
+                  values.matching_passwords.password,
+                  values.email,
+                  values.cpf,
+                  values.userName,
+                  values.birthDate,
+                  values.gender)
+      .subscribe(res => {
+        console.log(res.status)
+        if(res == 0){
+          this.alert('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
+        }
+        else{
+          this.router.navigate(["/tabs/tab1"]);
+        }
+      });
   }
 
   async loadSports(){
@@ -114,10 +130,7 @@ export class CuserPage implements OnInit {
           this.router.navigate(["/initial"]);
         }
         else{
-          var sport = res;
-          for(var i in sport){
-            console.log(sport[i])
-          }
+          this.sports = res;
         }
       });
   }

@@ -12,55 +12,50 @@
 </ion-header>
 
 <ion-content padding class="form-content">
-    <form #form="ngForm" (ngSubmit)="cad-equipe(form)">
+    <form [formGroup]="validateTeam" (ngSubmit)="onSubmit(validateTeam.value)">
 
     <!---Nome-->
     <ion-item>
         <ion-label position="floating" color="medium">Nome da Equipe</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" formControlName="nameTeam"></ion-input>
     </ion-item>
+
+    <!---Validação do Nome-->
+    <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.nameTeam">
+          <div class="error-message" *ngIf="validateTeam.get('nameTeam').hasError(validation.type) && (validateTeam.get('nameTeam').dirty || validateTeam.get('nameTeam').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
 
     <!--Esporte-->
     <ion-item>
-      <ion-label color="medium">Esporte</ion-label> <ion-select placeholder="Selecione">
+      <ion-label color="medium">Esporte</ion-label>
+      <ion-select placeholder="Selecione" formControlName="sports">
       <ion-select-option value="futebol">Futebol</ion-select-option>
       <ion-select-option value="basquete">Basquete</ion-select-option>
       </ion-select>
     </ion-item>
 
-<!-- Membros
-    <ion-item>
-      <ion-label color="medium">Membros iniciais</ion-label>
-      <ion-select multiple="true" placeholder="Selecione">
-          <ion-select-option value="1">Futebol</ion-select-option>
-          <ion-select-option value="volei">Vôlei</ion-select-option>
-          <ion-select-option value="basquete">Basquete</ion-select-option>
-      </ion-select>
-    </ion-item>
--->
     <!--Acesso-->
     <ion-item>
       <ion-label color="medium">Acesso</ion-label>
-      <ion-select placeholder="Selecione">
+      <ion-select placeholder="Selecione" formControlName="access">
         <ion-select-option value="pri">Privado</ion-select-option>
         <ion-select-option value="pub">Público</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <!-- BOTÕES
-    <ion-row class="ion-text-center">
-        <ion-col align-self-center>
-            <ion-button href="../add-members" class="ion-padding" routerDirection="back" color="medium">
-                <ion-icon name="person-add"></ion-icon>
-                <p padding>Membros</p>
-            </ion-button>
-        </ion-col>
-    </ion-row>
--->
+    <!--Descrição-->
+    <ion-item>
+      <ion-label position="floating" color="medium">Descrição (opcional)</ion-label>
+      <ion-textarea type="text" formControlName="desc"></ion-textarea>
+    </ion-item>
 
     <ion-row class="ion-text-center">
         <ion-col align-self-center>
-            <ion-button type="subimit" href="../tabs/tab1" class="ion-padding" routerDirection="forward" color="warning"[disabled]="form.invalid">
+            <ion-button type="submit" href="../tabs/tab1" class="ion-padding" routerDirection="forward" color="warning"[disabled]="!validateTeam.valid">
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
                 <p padding>Concluir</p>
             </ion-button>
