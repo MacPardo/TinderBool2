@@ -19,6 +19,11 @@ const apiUrl = "http://127.0.0.1:3000";
 
 export class RestApiService {
 
+  errorCodes = {
+    NO_ERROR: 0,
+    NOT_LOGGED: 1
+  };
+
   constructor(private http: HttpClient) { }
 
   private async handleError(error: HttpErrorResponse) {
@@ -29,7 +34,7 @@ export class RestApiService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(`API retornou o código ${error.status}: ${error.error}`);
-    }
+    } 
 
     // return an observable with a user-facing error message
     return 0;

@@ -112,6 +112,7 @@ export class CuserPage implements OnInit {
                   values.birthDate,
                   values.gender)
       .subscribe(res => {
+        console.log(res.status)
         if(res == 0){
           this.alert('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
         }
