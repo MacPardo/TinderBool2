@@ -37,7 +37,7 @@ const sportsmanDbPrepare = sportsman => ({
 
 router.post('/login', (req, res) => {
     SportsmanModel.findOne({ email: req.body.email }, async (err, sportsman) => {
-        
+
         if (!sportsman) {
             res.status(404).send();
             return;
@@ -75,7 +75,7 @@ router.post('/', async (req, res) => {
     console.log(`PASSWORD: ${req.body.password}\tHASH: ${hash}`);
 
     const sportsman = new SportsmanModel(sportsmanPrep);
-    
+
     console.log(sportsman);
     sportsman.save(err => {
         if (err) {
@@ -84,9 +84,15 @@ router.post('/', async (req, res) => {
             res.status(400).send();
         } else {
             console.log('saved successfully');
+            req.session.user = sportsman;
             res.status(201).send();
         }
     });
+});
+
+router.get('/logout', (req, res) => {
+  req.session.user = undefined;
+  res.status(200).send();
 });
 
 router.use(aux.authMiddleware);
