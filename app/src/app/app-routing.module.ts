@@ -10,16 +10,13 @@ const routes: Routes = [
   { path: 'local', loadChildren: './local/local.module#LocalPageModule' },
   { path: 'cad-equipe', loadChildren: './cad-equipe/cad-equipe.module#CadEquipePageModule' },
   { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
-<<<<<<< HEAD
   { path: 'cuser', loadChildren: './cuser/cuser.module#CuserPageModule' },
-  { path: 'showequipe', loadChildren: './showequipe/showequipe.module#ShowequipePageModule' }
+  { path: 'showequipe', loadChildren: './showequipe/showequipe.module#ShowequipePageModule' },
 
-=======
   { path: 'add-members', loadChildren: './add-members/add-members.module#AddMembersPageModule' },
-  { path: 'cuser', loadChildren: './cuser/cuser.module#CuserPageModule' },  { path: 'cad-user', loadChildren: './cad-user/cad-user.module#CadUserPageModule' },
+  { path: 'cuser', loadChildren: './cuser/cuser.module#CuserPageModule' },
+  { path: 'cad-user', loadChildren: './cad-user/cad-user.module#CadUserPageModule' },
   { path: 'det-equipe', loadChildren: './det-equipe/det-equipe.module#DetEquipePageModule' }
-
->>>>>>> c8f2d99941806de8f7ed8d59fae91d95b19b40a5
 
 ];
 @NgModule({

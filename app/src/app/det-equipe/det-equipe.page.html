@@ -7,28 +7,45 @@
 </ion-header>
 
 <ion-content padding margin-right>
-    <ion-title padding-top>Nome da equipe</ion-title>
+    <ion-title padding-top id="nomeEquipe"><b>Nome da equipe</b></ion-title>
 
     <ion-item padding-top>
         <ion-col align-self-left>
-            <ion-label>Acesso</ion-label>
+            <ion-label id="labelItem">Acesso</ion-label>
         </ion-col>
         <ion-col align-self-right text-right>
-            <ion-label>Privado</ion-label>
+            <ion-label id="textItem">Privado</ion-label>
         </ion-col>
     </ion-item>
 
     <ion-item>
-        <ion-label>Esporte</ion-label>
+        <ion-col align-self-left>
+            <ion-label id="labelItem">Esporte</ion-label>
+        </ion-col>
+        <ion-col align-self-right text-right>
+            <ion-label id="textItem">Basquete</ion-label>
+        </ion-col>
     </ion-item>
 
     <ion-item>
-        <ion-label>Descrição</ion-label>
-        Sometimes I wish I was a nightingale I'd make my lullaby a fairytale
-Sometimes I feel like I'm a mockingbird,
-Mimicking the songs I've already heard
-I want to dance on the horizon line
-But there is something I am caged behind
-I have a heart made for take flight
+        <ion-col align-self-left>
+            <ion-row>
+                <ion-label padding-top padding-bottom id="labelItem">Descrição</ion-label>
+            </ion-row>
+            <ion-row>
+                <ion-text text-justify padding-bottom id="textItem">
+                    Sometimes I wish I was a nightingale
+                    I'd make my lullaby a fairytale
+                    Sometimes I feel like I'm a mockingbird,
+                    Mimicking the songs I've already heard
+                    I want to dance on the horizon line
+                    But there is something I am caged behind
+                    I have a heart made for take flight
+                </ion-text>
+            </ion-row>
+        </ion-col>
     </ion-item>
+
+    <ion-button padding color="warning">Ver membros</ion-button>
+
 </ion-content>
