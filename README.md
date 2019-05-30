@@ -8,6 +8,8 @@ Páginas:
   
   cad-equipe - página de cadastro de equipes
   
+  det-equipe - página de detalhes de deteerminada equipe
+  
   equipes - página que mostra todas as equipes do usuário. Está na tab 1
   
   initial - página inicial para usuários não logados
