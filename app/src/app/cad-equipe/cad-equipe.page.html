@@ -33,8 +33,7 @@
     <ion-item>
       <ion-label color="medium">Esporte</ion-label>
       <ion-select placeholder="Selecione" formControlName="sports">
-      <ion-select-option value="futebol">Futebol</ion-select-option>
-      <ion-select-option value="basquete">Basquete</ion-select-option>
+        <ion-select-option value="{{sport._id}}" *ngFor="let sport of sports; let i = index">{{sport.sportName}}</ion-select-option>
       </ion-select>
     </ion-item>
 
