@@ -1,6 +1,6 @@
 # TinderBool2
 
-Páginas
+# Páginas
   account - página da conta que está na tab 3
   cuser - página de cadastro de usuário
   cad-equipe - página de cadastro de equipes
