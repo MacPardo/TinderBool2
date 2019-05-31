@@ -21,6 +21,7 @@ const sportsmanReqPrepare = sportsman => ({
     sportsInterest: sportsman.sports,
     gender: sportsman.gender,
     birthDate: sportsman.birthDate,
+    id: sportsman._id,
     picture: ''
 });
 
@@ -89,7 +90,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.use(aux.authMiddleware);
+//router.use(aux.authMiddleware);
 
 router.get('/', (req, res) => {
     SportsmanModel.find({}, (err, sportspeople) => {
@@ -121,7 +122,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    res.send(`edit sportsman with id = ${req.params.id}`);
+    // res.send(`edit sportsman with id = ${req.params.id}`);
     const sportsman = sportsmanDbPrepare(req.body);
 
     SportsmanModel.findOneAndUpdate({ '_id': req.params.id }, sportsman, (err, doc, updateRes) => {

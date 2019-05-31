@@ -15,6 +15,11 @@ mongoose.connection.on('error', () => {
 
 app.use(bodyParser.json());
 app.use(session({secret: 'TinderBool'}));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use('/', router);
 
 app.get('/', (req, res) => {
