@@ -21,6 +21,7 @@ const sportsmanReqPrepare = sportsman => ({
     sportsInterest: sportsman.sports,
     gender: sportsman.gender,
     birthDate: sportsman.birthDate,
+    id: sportsman._id,
     picture: ''
 });
 
@@ -127,7 +128,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    res.send(`edit sportsman with id = ${req.params.id}`);
+    // res.send(`edit sportsman with id = ${req.params.id}`);
     const sportsman = sportsmanDbPrepare(req.body);
 
     SportsmanModel.findOneAndUpdate({ '_id': req.params.id }, sportsman, (err, doc, updateRes) => {

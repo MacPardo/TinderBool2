@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const TeamSchema = new mongoose.Schema({
     teamName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -22,6 +23,11 @@ const TeamSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sport',
         required: true
+    },
+    admin: {
+        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sportsman'
     }
 });
 
