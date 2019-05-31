@@ -90,7 +90,7 @@ export class RestApiService {
   }
 
   login(email: string, password: string): Observable<any> {
-    const url = `${apiUrl}/sportsman?email=${email}&password=${password}`;
+    const url = `${apiUrl}/sportsman`;
     var body = {
       email:email,
       password:password

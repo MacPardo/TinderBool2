@@ -38,7 +38,7 @@ export class CadEquipePage implements OnInit {
       nameTeam: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(3),
-        Validators.pattern(new RegExp(`^([a-z${extraLetters}])+$`, 'i'))
+        Validators.pattern(new RegExp(`^([a-z${extraLetters}]+)+$`, 'i'))
       ])),
       sports: new FormControl('', Validators.required),
       access: new FormControl('', Validators.required),
