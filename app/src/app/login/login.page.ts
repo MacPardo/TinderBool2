@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+
 import { Router } from  "@angular/router";
 import { RestApiService } from '../rest-api.service';
 
@@ -45,11 +46,10 @@ export class LoginPage implements OnInit {
         loading.dismiss();
         if(res == 0)
           this.errorToast('Algo de errado ocorreu', 'Tente novamente em alguns minutos.');
-        /*else if(res)
-          this.errorToast('Email ou senha inválidos', 'Tente novamente');*/
-        else{
-          this.sportsman = res;
-        }
+        else if (res.status == 200 || res.status == 201){
+          this.router.navigate(["/tabs/tab1"]);
+        }else{
+          this.errorToast('Login ou senha incorreto', 'verifique-os por favor');        }
       });
   }
 
