@@ -6,6 +6,7 @@ const router = require('./routes/routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cors = require('cors');
 
 const dbConnectionString = 'mongodb://127.0.0.1/tinderbool';
 mongoose.connect(dbConnectionString, {useNewUrlParser: true});
@@ -15,11 +16,7 @@ mongoose.connection.on('error', () => {
 
 app.use(bodyParser.json());
 app.use(session({secret: 'TinderBool'}));
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors());
 app.use('/', router);
 
 app.get('/', (req, res) => {
